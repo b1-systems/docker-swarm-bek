@@ -1,0 +1,9 @@
+filebeat.prospectors:
+  - input_type: log
+    paths:
+      - /var/lib/docker/containers/*/*-json.log
+    document_type: docker
+    json.message_key: log
+
+output.elasticsearch:
+   hosts: ['${ELASTICSEARCH_HOST:elasticsearch}:${ELASTICSEARCH_PORT:9200}']

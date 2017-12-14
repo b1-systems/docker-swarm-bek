@@ -1,0 +1,54 @@
+#
+# the b-e-k-stack (beautful-ever-known? just kidding, :)
+#     ^_ a collection of beats, elasticsearch and kibana stack for Docker Swarm Mode
+#
+
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${VERSION:-5.2.1}
+    environment:
+      ES_JAVA_OPTS: '-Xms256m -Xmx256m'
+      xpack.security.enabled: 'false'
+      xpack.monitoring.enabled: 'false'
+      xpack.graph.enabled: 'false'
+      xpack.watcher.enabled: 'false'
+    volumes:
+      - es1data:/usr/share/elasticsearch/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.elasticsearch == es1
+
+  filebeat:
+    image: filebeat:${VERSION:-5.2.1}-custom
+    environment:
+      ELASTICSEARCH_HOST: 'elasticsearch'
+      ELASTICSEARCH_PORT: '9200'
+    volumes:
+      - /var/lib/docker:/var/lib/docker:ro
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${VERSION:-5.2.1}
+    ports:
+      - '80:5601'
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_HOST: 'elasticsearch'
+      ELASTICSEARCH_PORT: '9200'
+      XPACK_SECURITY_ENABLED: 'false'
+      XPACK_MONITORING_ENABLED: 'false'
+    deploy:
+      replicas: 1
+
+volumes:
+  es1data:
+    driver: local
