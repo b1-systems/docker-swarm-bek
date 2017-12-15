@@ -16,7 +16,7 @@ Instructions
 ---
 
 1) Setup an Docker Swarm, label an swarm node for elasticsearch usage and
-modify kernel settings [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/5.1/docker.html)
+modify kernel settings, see [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/5.2/docker.html)
 
 ```
 echo "vm.max_map_count=262144" > /etc/sysctl.d/99-docker-elasticsearch.conf
