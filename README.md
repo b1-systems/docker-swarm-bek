@@ -15,14 +15,21 @@ This stack deploys the following services:
 Instructions
 ---
 
-1) Setup an Docker Swarm and label an swarm node for elasticsearch usage
-(modify kernel vm.max_map_count_)
+1) Setup an Docker Swarm, label an swarm node for elasticsearch usage and
+modify kernel settings [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/5.1/docker.html)
 
 ```
-sysctl -w vm.max_map_count=262144
+echo "vm.max_map_count=262144" > /etc/sysctl.d/99-docker-elasticsearch.conf
+sysctl -p /etc/sysctl.d/99-docker-elasticsearch.conf
+```
+
+Initialize a docker swarm and add some nodes to cluster, see [Docker Swarm Docs](https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/)
+
+```
 docker swarm init
 ```
 
+Add Node label for elasticsearch
 
 ```
 docker node update --label-add elasticsearch=es1 <node|node-uuid>
