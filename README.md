@@ -4,7 +4,7 @@ B(eat)-E(leasticsearch)-K(ibana) Docker Swarm Stack
 Info
 ---
 
-The Docker Stack file `docker-stack.yml` can be used to deploy dynamic logging stack for Docker Swarm.
+The Docker Stack file `stack.yml` can be used to deploy dynamic logging stack for Docker Swarm.
 This stack deploys the following services:
 
 * `Filebeat`: this service deployed to all hosts (Docker Swarm service global mode) to collect the json logs from docker container and feed it to eleasticsearch directly.
@@ -47,7 +47,7 @@ Deploy the image to your docker swarm infrastructure via a (private) docker regi
 3) Run the stack
 
 ```
-docker stack deploy -c docker-stack.yml bek
+docker stack deploy -c stack.yml bek
 ```
 
 4) Use the Kibana UI for browsing through the logfiles
