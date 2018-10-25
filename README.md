@@ -16,7 +16,7 @@ Instructions
 ---
 
 1) Setup an Docker Swarm, label an swarm node for elasticsearch usage and
-modify kernel settings, see [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/6.3/docker.html)
+modify kernel settings, see [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 ```
 echo "vm.max_map_count=262144" > /etc/sysctl.d/99-docker-elasticsearch.conf
@@ -35,11 +35,11 @@ Add Node label for elasticsearch
 docker node update --label-add elasticsearch=es1 <node|node-uuid>
 ```
 
-2) Build your customized filebeat docker image, filebeat version 6.3.0 is used.
+2) Build your customized filebeat docker image
 
 ```
 cd filebeat-customized
-docker build -t filebeat:6.3.0-custom .
+docker build -t filebeat:6.4.2-custom .
 
 ```
 Deploy the image to your docker swarm infrastructure via a (private) docker registry, like Docker Index aka [Docker Hub](https://hub.docker.com/)
